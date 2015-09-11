@@ -29,18 +29,17 @@ module.exports = function alwaysDone (fn) {
   }
 
   var self = this
-  var done = once(dezalgo(cb))
   var domain = catchup().once('error', done)
 
-  function cb () {
+  function done () {
     domain.off('error', done)
-    callback.apply(null, arguments)
+    once(dezalgo(callback), true).apply(null, arguments)
   }
-
   var ret = domain.run(function () {
     if (!isAsyncFn(fn)) return fn.apply(self, args)
     return fn.apply(self, args.concat(done))
   })
+  if (domain.errored) return
   if (isNodeStream(ret) || isChildProcess(ret)) {
     onStreamEnd(streamExhaust(ret), function (err) {
       if (err) return done(err)

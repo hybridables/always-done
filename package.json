@@ -1,6 +1,6 @@
 {
   "name": "always-done",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "description": "wip",
   "repository": "tunnckoCore/always-done",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
@@ -10,7 +10,7 @@
     "test": "standard && node test.js"
   },
   "dependencies": {
-    "catchup": "0.0.0",
+    "catchup": "^0.1.0",
     "dezalgo": "^1.0.3",
     "is-async-function": "^1.1.0",
     "is-child-process": "^1.0.0",
