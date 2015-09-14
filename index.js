@@ -10,6 +10,7 @@
 var sliced = require('sliced')
 var onetime = require('onetime')
 var dezalgo = require('dezalgo')
+var Bluebird = require('bluebird')
 var isError = require('is-typeof-error')
 var isAsyncFn = require('is-async-function')
 var isNodeStream = require('is-node-stream')
@@ -41,7 +42,7 @@ module.exports = function alwaysDone (fn) {
 
   if (isAsyncFn(fn)) args = args.concat(done)
 
-  Promise.resolve()
+  Bluebird.resolve()
     .then(function () {
       return fn.apply(self, args)
     })
@@ -59,6 +60,6 @@ module.exports = function alwaysDone (fn) {
         done(ret)
         return
       }
-      done.apply(self, [null].concat(ret))
+      done.call(self, null, ret)
     }, done)
 }

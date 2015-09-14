@@ -10,6 +10,7 @@
     "test": "standard && node test.js"
   },
   "dependencies": {
+    "bluebird": "^2.10.0",
     "dezalgo": "^1.0.3",
     "is-async-function": "^1.1.0",
     "is-child-process": "^1.0.0",
