@@ -17,8 +17,16 @@ function successJsonParse () {
   return JSON.parse('{"foo":"bar"}')
 }
 
-function failJsonParse () {
+function returnFailingJsonParse () {
   return JSON.parse('{"f')
+}
+
+function noReturnFailJsonParse () {
+  JSON.parse('{"f')
+}
+
+function returnArray () {
+  return [4, 5, 6]
 }
 
 function successReadFile () {
@@ -38,7 +46,7 @@ test('should handle result when JSON.parse pass', function (done) {
 })
 
 test('should handle error when JSON.parse fail', function (done) {
-  alwaysDone(failJsonParse, function (err, res) {
+  alwaysDone(returnFailingJsonParse, function (err, res) {
     test.ifError(!err)
     test.ok(err instanceof Error)
     test.strictEqual(res, undefined)
@@ -59,6 +67,23 @@ test('should handle error when fs.readFileSync fail', function (done) {
     test.ifError(!err)
     test.ok(err instanceof Error)
     test.strictEqual(res, undefined)
+    done()
+  })
+})
+
+test('should handle thrown errors', function (done) {
+  alwaysDone(noReturnFailJsonParse, function (err, res) {
+    test.ifError(!err)
+    test.ok(err instanceof Error)
+    test.strictEqual(res, undefined)
+    done()
+  })
+})
+
+test('should pass whole returned array to single argument', function (done) {
+  alwaysDone(returnArray, function (err, arr) {
+    test.ifError(err)
+    test.deepEqual(arr, [4, 5, 6])
     done()
   })
 })

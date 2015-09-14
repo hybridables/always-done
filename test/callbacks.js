@@ -16,14 +16,6 @@ function successJsonParse (callback) {
   callback(null, JSON.parse('{"foo":"bar"}'))
 }
 
-function returnArray () {
-  return [4, 5, 6]
-}
-
-function failJsonParse () {
-  JSON.parse('{"f')
-}
-
 function twoArgs (callback) {
   callback(null, 1, 2)
 }
@@ -40,15 +32,6 @@ test('should handle a successful callback', function (done) {
   })
 })
 
-test('should handle thrown errors', function (done) {
-  alwaysDone(failJsonParse, function (err, res) {
-    test.ifError(!err)
-    test.ok(err instanceof Error)
-    test.strictEqual(res, undefined)
-    done()
-  })
-})
-
 test('should handle an errored callback', function (done) {
   alwaysDone(failure, function (err, res) {
     test.ifError(!err)
@@ -59,19 +42,11 @@ test('should handle an errored callback', function (done) {
   })
 })
 
-test('should pass all arguments to the completion callback', function (done) {
+test('should spread arguments - cb(null, 1, 2) to cb(err, one, two)', function (done) {
   alwaysDone(twoArgs, function (err, one, two) {
     test.ifError(err)
     test.strictEqual(one, 1)
     test.strictEqual(two, 2)
-    done()
-  })
-})
-
-test('should pass whole returned array to single argument', function (done) {
-  alwaysDone(returnArray, function (err, arr) {
-    test.ifError(err)
-    test.deepEqual(arr, [4, 5, 6])
     done()
   })
 })
