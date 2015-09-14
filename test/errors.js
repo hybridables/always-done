@@ -12,13 +12,23 @@
 var test = require('assertit')
 var alwaysDone = require('../index')
 
+test('should throw TypeError if `fn` not function', function (done) {
+  function fixture () {
+    alwaysDone(123, function () {})
+  }
+
+  test.throws(fixture, TypeError)
+  test.throws(fixture, /expect `fn` to be function/)
+  done()
+})
+
 test('should throw TypeError if `callback` not function', function (done) {
   function fixture () {
     alwaysDone(function () {}, 123)
   }
 
   test.throws(fixture, TypeError)
-  test.throws(fixture, /expect `callback` function/)
+  test.throws(fixture, /expect `callback` to be function/)
   done()
 })
 

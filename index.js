@@ -24,9 +24,13 @@ module.exports = function alwaysDone (fn) {
   var args = sliced(argz, 1, -1)
   var callback = argz[argz.length - 1]
 
-  if (typeof callback !== 'function') {
-    throw new TypeError('always-done: expect `callback` function as last argument')
+  if (typeof fn !== 'function') {
+    throw new TypeError('always-done: expect `fn` to be function')
   }
+  if (typeof callback !== 'function') {
+    throw new TypeError('always-done: expect `callback` to be function')
+  }
+
   var done = onetime(dezalgo(function (err) {
     if (err instanceof Error) {
       callback.call(self, err)
