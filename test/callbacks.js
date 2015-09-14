@@ -16,6 +16,10 @@ function successJsonParse (callback) {
   callback(null, JSON.parse('{"foo":"bar"}'))
 }
 
+function notSpreadArrays (callback) {
+  callback(null, [1, 2], 3, [4, 5])
+}
+
 function twoArgs (callback) {
   callback(null, 1, 2)
 }
@@ -42,11 +46,21 @@ test('should handle an errored callback', function (done) {
   })
 })
 
-test('should spread arguments - cb(null, 1, 2) to cb(err, one, two)', function (done) {
+test('should spread arguments - e.g. cb(null, 1, 2)', function (done) {
   alwaysDone(twoArgs, function (err, one, two) {
     test.ifError(err)
     test.strictEqual(one, 1)
     test.strictEqual(two, 2)
+    done()
+  })
+})
+
+test('should not spread arrays - e.g. cb(null, [1, 2], 3)', function (done) {
+  alwaysDone(notSpreadArrays, function (err, arrOne, three, arrTwo) {
+    test.ifError(err)
+    test.deepEqual(arrOne, [1, 2])
+    test.strictEqual(three, 3)
+    test.deepEqual(arrTwo, [4, 5])
     done()
   })
 })
