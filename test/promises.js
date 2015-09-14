@@ -12,6 +12,7 @@
 var fs = require('mz/fs')
 var test = require('assertit')
 var Bluebird = require('bluebird')
+var isPromise = require('is-promise')
 var alwaysDone = require('../index')
 
 function resolvedPromise () {
@@ -60,6 +61,22 @@ test('should handle error of promised fs.readFile', function (done) {
     test.ifError(!err)
     test.ok(err instanceof Error)
     test.strictEqual(res, undefined)
+    done()
+  })
+})
+
+test('should return promise', function (done) {
+  var count = 11
+  var promise = alwaysDone(function (cb) {
+    cb(null, 123)
+  }, function (err, res) {
+    test.ifError(err)
+    test.strictEqual(res, 123)
+    count += 22
+  })
+  promise.then(function () {
+    test.strictEqual(isPromise(promise), true)
+    test.strictEqual(count, 33)
     done()
   })
 })

@@ -42,7 +42,7 @@ module.exports = function alwaysDone (fn) {
 
   if (isAsyncFn(fn)) args = args.concat(done)
 
-  Bluebird.resolve()
+  return Bluebird.resolve()
     .then(function () {
       return fn.apply(self, args)
     })
