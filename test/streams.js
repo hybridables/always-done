@@ -40,6 +40,10 @@ function unpiped () {
   return fs.createReadStream(exists)
 }
 
+function unpipedFailure () {
+  return fs.createReadStream(notExists)
+}
+
 test('should handle a successful stream', function (done) {
   alwaysDone(success, function (err, res) {
     test.ifError(err)
@@ -68,6 +72,17 @@ test('should handle an errored stream', function (done) {
   alwaysDone(failure, function (err, res) {
     test.ifError(!err)
     test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
+    test.strictEqual(res, undefined)
+    done()
+  })
+})
+
+test('should handle an error unpiped readable stream', function (done) {
+  alwaysDone(unpipedFailure, function (err, res) {
+    test.ifError(!err)
+    test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
     test.strictEqual(res, undefined)
     done()
   })

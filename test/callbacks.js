@@ -16,6 +16,11 @@ function successJsonParse (callback) {
   callback(null, JSON.parse('{"foo":"bar"}'))
 }
 
+// @todo
+// function returnArray () {
+//   return [4, 5, 6]
+// }
+
 function failJsonParse () {
   JSON.parse('{"f')
 }
@@ -63,3 +68,12 @@ test('should pass all arguments to the completion callback', function (done) {
     done()
   })
 })
+
+// @todo
+// test('should pass whole returned array to single argument', function (done) {
+//   alwaysDone(returnArray, function (err, arr) {
+//     test.ifError(err)
+//     console.log(arr)
+//     done()
+//   })
+// })

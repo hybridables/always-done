@@ -10,12 +10,10 @@
     "test": "standard && node test.js"
   },
   "dependencies": {
-    "catchup": "^0.1.0",
     "dezalgo": "^1.0.3",
     "is-async-function": "^1.1.0",
     "is-child-process": "^1.0.0",
     "is-node-stream": "^1.0.0",
-    "is-promise": "^2.1.0",
     "is-typeof-error": "^1.0.1",
     "on-stream-end": "0.0.0",
     "onetime": "^1.0.0",

@@ -7,66 +7,58 @@
 
 'use strict'
 
-var once = require('onetime')
-var slice = require('sliced')
+var sliced = require('sliced')
+var onetime = require('onetime')
 var dezalgo = require('dezalgo')
-var isPromise = require('is-promise')
 var isError = require('is-typeof-error')
 var isAsyncFn = require('is-async-function')
 var isNodeStream = require('is-node-stream')
 var isChildProcess = require('is-child-process')
 var streamExhaust = require('stream-exhaust')
 var onStreamEnd = require('on-stream-end')
-var catchup = require('catchup')
 
 module.exports = function alwaysDone (fn) {
-  var argz = slice(arguments)
-  var args = slice(argz, 1, -1)
+  var self = this
+  var argz = sliced(arguments)
+  var args = sliced(argz, 1, -1)
   var callback = argz[argz.length - 1]
 
   if (typeof callback !== 'function') {
     throw new TypeError('always-done: expect `callback` function as last argument')
   }
+  var done = onetime(dezalgo(function (err) {
+    if (err instanceof Error) {
+      callback.call(self, err)
+      return
+    }
+    callback.apply(self, [null].concat(sliced(arguments, 1)))
+  }))
 
-  var self = this
-  var domain = catchup().once('error', done)
-
-  function done () {
-    domain.off('error', done)
-    once(dezalgo(callback), true).apply(null, arguments)
-  }
-  var ret = domain.run(function () {
-    if (!isAsyncFn(fn)) return fn.apply(self, args)
-    return fn.apply(self, args.concat(done))
+  process.once('uncaughtException', done)
+  process.on('newListener', function (name) {
+    this.removeAllListeners(name)
   })
-  if (domain.errored) return
-  if (isNodeStream(ret) || isChildProcess(ret)) {
-    onStreamEnd(streamExhaust(ret), function (err) {
-      if (err) return done(err)
-      var args = slice(arguments, 1)
-      done.apply(self, [null].concat(args))
+
+  if (isAsyncFn(fn)) args = args.concat(done)
+
+  Promise.resolve()
+    .then(function () {
+      return fn.apply(self, args)
     })
-    return
-  }
-  if (ret && typeof ret.subscribe === 'function') {
-    if (ret.value) return done(null, ret.value)
-    ret.subscribe(function noop () {}, done, function (res) {
-      var args = slice(arguments)
-      done.apply(self, [null].concat(args))
-    })
-    return
-  }
-  if (isPromise(ret)) {
-    ret.then(function (res) {
-      done(null, res)
+    .then(function (ret) {
+      if (isNodeStream(ret) || isChildProcess(ret)) {
+        onStreamEnd(streamExhaust(ret), done)
+        return
+      }
+      if (ret && typeof ret.subscribe === 'function') {
+        if (ret.value) return done(null, ret.value)
+        ret.subscribe(function noop () {}, done, done)
+        return
+      }
+      if (isError(ret)) {
+        done(ret)
+        return
+      }
+      done.apply(self, [null].concat(ret))
     }, done)
-    return
-  }
-  if (isError(ret)) {
-    done(ret)
-    return
-  }
-  if (!isAsyncFn(fn)) {
-    done(null, ret)
-  }
 }

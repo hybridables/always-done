@@ -42,6 +42,7 @@ test('should handle failing exec', function (done) {
   alwaysDone(execFail, function (err, res) {
     test.ifError(!err)
     test.ok(err instanceof Error)
+    test.strictEqual(err.message, 'exited with error code: 127')
     test.strictEqual(res, undefined)
     done()
   })
@@ -60,6 +61,7 @@ test('should handle failing spawn', function (done) {
   alwaysDone(spawnFail, function (err, res) {
     test.ifError(!err)
     test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
     test.strictEqual(res, undefined)
     done()
   })
