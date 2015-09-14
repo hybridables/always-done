@@ -40,6 +40,7 @@ module.exports = function alwaysDone (fn) {
   }))
 
   process.once('uncaughtException', done)
+  process.once('unhandledRejection', done)
   process.on('newListener', function (name) {
     this.removeAllListeners(name)
   })
@@ -57,7 +58,9 @@ module.exports = function alwaysDone (fn) {
       }
       if (ret && typeof ret.subscribe === 'function') {
         if (ret.value) return done(null, ret.value)
-        ret.subscribe(function noop () {}, done, done)
+        ret.subscribe(function noop () {}, done, function () {
+          callback.apply(self, [null].concat(sliced(arguments)))
+        })
         return
       }
       if (isError(ret)) {
@@ -65,5 +68,6 @@ module.exports = function alwaysDone (fn) {
         return
       }
       done.call(self, null, ret)
+      return ret
     }, done)
 }
