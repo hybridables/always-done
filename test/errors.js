@@ -33,3 +33,16 @@ test('should returned error be passed to completion callback as `err`', function
     done()
   })
 })
+
+test('should mute all errors and pass them to completion callback', function (done) {
+  alwaysDone(function () {
+    foobar // eslint-disable-line no-undef
+    return 123
+  }, function (err, res) {
+    test.ifError(!err)
+    test.ok(err instanceof Error)
+    test.equal(err.name, 'ReferenceError')
+    test.equal(res, undefined)
+    done()
+  })
+})
