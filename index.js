@@ -23,6 +23,7 @@ module.exports = function alwaysDone (fn) {
   var argz = sliced(arguments)
   var args = sliced(argz, 1, -1)
   var callback = argz[argz.length - 1]
+  var isAsync = false
 
   if (typeof fn !== 'function') {
     throw new TypeError('always-done: expect `fn` to be function')
@@ -45,7 +46,10 @@ module.exports = function alwaysDone (fn) {
     this.removeAllListeners(name)
   })
 
-  if (isAsyncFn(fn)) args = args.concat(done)
+  if (isAsyncFn(fn)) {
+    isAsync = true
+    args = args.concat(done)
+  }
 
   return Bluebird.resolve()
     .then(function () {
@@ -67,7 +71,10 @@ module.exports = function alwaysDone (fn) {
         done(ret)
         return
       }
-      done.call(self, null, ret)
+      if (!isAsync) {
+        done.call(self, null, ret)
+      }
+
       return ret
     }, done)
 }

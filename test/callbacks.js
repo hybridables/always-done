@@ -9,6 +9,7 @@
 
 'use strict'
 
+var fs = require('fs')
 var test = require('assertit')
 var alwaysDone = require('../index')
 
@@ -26,6 +27,10 @@ function twoArgs (callback) {
 
 function failure (callback) {
   callback(new Error('callback error'))
+}
+
+function readFile (cb) {
+  fs.readFile('package.json', 'utf8', cb)
 }
 
 test('should handle a successful callback', function (done) {
@@ -61,6 +66,24 @@ test('should not spread arrays - e.g. cb(null, [1, 2], 3)', function (done) {
     test.deepEqual(arrOne, [1, 2])
     test.strictEqual(three, 3)
     test.deepEqual(arrTwo, [4, 5])
+    done()
+  })
+})
+
+test('should handle result of `fs.readFile`', function (done) {
+  alwaysDone(readFile, function (err, res) {
+    test.ifError(err)
+    test.equal(typeof res, 'string')
+    test.ok(res.indexOf('"license": "MIT"') !== -1)
+    done()
+  })
+})
+
+test('should handle buffer result from `fs.readFile` passed directly', function (done) {
+  alwaysDone(fs.readFile, 'package.json', function (err, res) {
+    test.ifError(err)
+    test.ok(Buffer.isBuffer(res))
+    test.ok(res.toString('utf8').indexOf('"license": "MIT"') !== -1)
     done()
   })
 })
