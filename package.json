@@ -1,7 +1,7 @@
 {
   "name": "always-done",
-  "version": "0.5.1",
-  "description": "wip",
+  "version": "0.6.0",
+  "description": "wip, handles completion and errors of anything!",
   "repository": "tunnckoCore/always-done",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
   "main": "index.js",
@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "assertit": "^0.1.0",
-    "bluebird": "^2.10.0",
     "is-promise": "^2.1.0",
     "mz": "^2.0.0",
     "rx": "^3.1.2",
