@@ -16,7 +16,7 @@
     "is-child-process": "^1.0.0",
     "is-node-stream": "^1.0.0",
     "is-typeof-error": "^1.0.1",
-    "on-stream-end": "0.0.0",
+    "on-stream-end": "^0.1.0",
     "onetime": "^1.0.0",
     "sliced": "^1.0.1",
     "stream-exhaust": "^1.0.1"
