@@ -10,14 +10,14 @@
     "test": "standard && node test.js"
   },
   "dependencies": {
-    "bluebird": "^2.10.0",
     "dezalgo": "^1.0.3",
     "is-async-function": "^1.1.0",
     "is-child-process": "^1.0.0",
     "is-node-stream": "^1.0.0",
     "is-typeof-error": "^1.0.1",
-    "on-stream-end": "^0.1.0",
+    "on-stream-end": "^1.0.0",
     "onetime": "^1.0.0",
+    "redolent": "^1.0.3",
     "sliced": "^1.0.1",
     "stream-exhaust": "^1.0.1"
   },

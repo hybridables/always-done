@@ -10,7 +10,7 @@
 var sliced = require('sliced')
 var onetime = require('onetime')
 var dezalgo = require('dezalgo')
-var Bluebird = require('bluebird')
+var redolent = require('redolent')
 var isError = require('is-typeof-error')
 var isAsyncFn = require('is-async-function')
 var isNodeStream = require('is-node-stream')
@@ -51,10 +51,11 @@ module.exports = function alwaysDone (fn) {
     args = args.concat(done)
   }
 
-  return Bluebird.resolve()
-    .then(function () {
-      return fn.apply(self, args)
-    })
+  // allow passing custom promise module
+  redolent.promise = alwaysDone.promise
+  return redolent(function () {
+    return fn.apply(self, args)
+  })()
     .then(function (ret) {
       if (isNodeStream(ret) || isChildProcess(ret)) {
         onStreamEnd(streamExhaust(ret), done)
