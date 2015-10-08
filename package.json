@@ -23,9 +23,12 @@
   },
   "devDependencies": {
     "assertit": "^0.1.0",
+    "is-buffer": "^1.1.0",
     "is-promise": "^2.1.0",
     "mz": "^2.0.0",
+    "pinkie": "^1.0.0",
     "rx": "^3.1.2",
+    "semver": "^5.0.3",
     "through2": "^2.0.0"
   },
   "files": [

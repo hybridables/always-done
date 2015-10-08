@@ -11,7 +11,9 @@
 
 var fs = require('mz/fs')
 var test = require('assertit')
+var semver = require('semver')
 var Bluebird = require('bluebird')
+var isBuffer = require('is-buffer')
 var isPromise = require('is-promise')
 var alwaysDone = require('../index')
 
@@ -79,4 +81,46 @@ test('should return promise', function (done) {
     test.strictEqual(count, 33)
     done()
   })
+})
+
+test('should be Bluebird promise if native promise not available', function (done) {
+  var count = 33
+  var promise = alwaysDone(fs.readFileSync, 'package.json', function (err, buf) {
+    test.ifError(err)
+    test.strictEqual(isBuffer(buf), true)
+    count += 33
+  })
+
+  promise.then(function () {
+    if (semver.lt(process.version, '0.11.13')) {
+      test.strictEqual(promise.___bluebirdPromise, true)
+      test.strictEqual(promise.Prome.___bluebirdPromise, true)
+    }
+    test.strictEqual(count, 66)
+    done()
+  }, done)
+})
+
+test('should use `pinkie` promise when native promise not available', function (done) {
+  alwaysDone.promise = require('pinkie')
+  var promise = alwaysDone(fs.readFileSync, 'package.json', function (err, res) {
+    test.ifError(err)
+    return res
+  })
+  promise.then(function (buf) {
+    if (semver.lt(process.version, '0.11.13')) {
+      test.strictEqual(promise.___customPromise, true)
+      test.strictEqual(promise.Prome.___customPromise, true)
+    }
+    test.strictEqual(isBuffer(buf), true)
+    done()
+  })
+})
+
+test('should handle result with promise.then, even if noop callback given', function (done) {
+  var promise = alwaysDone(fs.readFileSync, 'package.json', function () {})
+  promise.then(function (buf) {
+    test.strictEqual(isBuffer(buf), true)
+    done()
+  }, done)
 })
