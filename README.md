@@ -20,7 +20,7 @@ var alwaysDone = require('always-done')
 
 
 ## Contributing
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/always-done/issues/new).  
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/hybridables/always-done/issues/new).  
 But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guidelines.
 
 
@@ -32,21 +32,21 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [npmjs-url]: https://www.npmjs.com/package/always-done
 [npmjs-img]: https://img.shields.io/npm/v/always-done.svg?label=always-done
 
-[license-url]: https://github.com/tunnckoCore/always-done/blob/master/LICENSE.md
+[license-url]: https://github.com/hybridables/always-done/blob/master/LICENSE.md
 [license-img]: https://img.shields.io/badge/license-MIT-blue.svg
 
 
-[codeclimate-url]: https://codeclimate.com/github/tunnckoCore/always-done
-[codeclimate-img]: https://img.shields.io/codeclimate/github/tunnckoCore/always-done.svg
+[codeclimate-url]: https://codeclimate.com/github/hybridables/always-done
+[codeclimate-img]: https://img.shields.io/codeclimate/github/hybridables/always-done.svg
 
-[travis-url]: https://travis-ci.org/tunnckoCore/always-done
-[travis-img]: https://img.shields.io/travis/tunnckoCore/always-done.svg
+[travis-url]: https://travis-ci.org/hybridables/always-done
+[travis-img]: https://img.shields.io/travis/hybridables/always-done.svg
 
-[coveralls-url]: https://coveralls.io/r/tunnckoCore/always-done
-[coveralls-img]: https://img.shields.io/coveralls/tunnckoCore/always-done.svg
+[coveralls-url]: https://coveralls.io/r/hybridables/always-done
+[coveralls-img]: https://img.shields.io/coveralls/hybridables/always-done.svg
 
-[david-url]: https://david-dm.org/tunnckoCore/always-done
-[david-img]: https://img.shields.io/david/tunnckoCore/always-done.svg
+[david-url]: https://david-dm.org/hybridables/always-done
+[david-img]: https://img.shields.io/david/hybridables/always-done.svg
 
 [standard-url]: https://github.com/feross/standard
 [standard-img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg

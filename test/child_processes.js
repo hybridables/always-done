@@ -1,5 +1,5 @@
 /*!
- * always-done <https://github.com/tunnckoCore/always-done>
+ * always-done <https://github.com/hybridables/always-done>
  *
  * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
