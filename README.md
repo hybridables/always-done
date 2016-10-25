@@ -21,23 +21,10 @@
   * [async/await completion](#asyncawait-completion)
   * [Callbacks completion](#callbacks-completion)
   * [Synchronous functions](#synchronous-functions)
-    + [Returning a value](#returning-a-value)
-    + [Returning an error](#returning-an-error)
   * [Promises](#promises)
-    + [Returning a resolved Promise](#returning-a-resolved-promise)
-    + [Returning a rejected Promise](#returning-a-rejected-promise)
   * [Streams](#streams)
-    + [Unpiped streams](#unpiped-streams)
-    + [Failing unpiped streams](#failing-unpiped-streams)
-    + [Failing piped streams](#failing-piped-streams)
   * [Observables](#observables)
-    + [Empty observable](#empty-observable)
-    + [Successful observable](#successful-observable)
-    + [Failing observable](#failing-observable)
   * [Child Process](#child-process)
-    + [Successful exec](#successful-exec)
-    + [Failing exec](#failing-exec)
-    + [Failing spawn](#failing-spawn)
   * [Handling native errors](#handling-native-errors)
   * [Always completes](#always-completes)
 - [Contributing](#contributing)
@@ -111,6 +98,8 @@ alwaysDone(async function () {
 })
 ```
 
+**[back to top](#table-of-contents)**
+
 ### Callbacks completion
 
 ```js
@@ -125,6 +114,8 @@ alwaysDone(function (cb) {
   console.log(pkg.name) // => 'always-done'
 })
 ```
+
+**[back to top](#table-of-contents)**
 
 ### Synchronous functions
 
@@ -148,6 +139,8 @@ alwaysDone(function () {
 })
 ```
 
+**[back to top](#table-of-contents)**
+
 ### Promises
 
 #### Returning a resolved Promise
@@ -169,6 +162,8 @@ alwaysDone(function () {
   console.log(err.message) // => 'foo bar
 })
 ```
+
+**[back to top](#table-of-contents)**
 
 ### Streams
 
@@ -205,6 +200,8 @@ alwaysDone(function () {
 })
 ```
 
+**[back to top](#table-of-contents)**
+
 ### Observables
 
 #### Empty observable
@@ -237,6 +234,8 @@ alwaysDone(function () {
   console.log(err.message) // => 'observable error'
 })
 ```
+
+**[back to top](#table-of-contents)**
 
 ### Child Process
 
@@ -276,6 +275,8 @@ alwaysDone(function () {
 })
 ```
 
+**[back to top](#table-of-contents)**
+
 ### Handling native errors
 
 ```js
@@ -287,6 +288,8 @@ alwaysDone(function () {
   // => ReferenceError: foo is not defined
 })
 ```
+
+**[back to top](#table-of-contents)**
 
 ### Always completes
 > It may looks strange, but it's logical.
@@ -307,6 +310,14 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 ## [Charlike Make Reagent](http://j.mp/1stW47C) [![new message to charlike][new-message-img]][new-message-url] [![freenode #charlike][freenode-img]][freenode-url]
 
 [![tunnckoCore.tk][author-www-img]][author-www-url] [![keybase tunnckoCore][keybase-img]][keybase-url] [![tunnckoCore npm][author-npm-img]][author-npm-url] [![tunnckoCore twitter][author-twitter-img]][author-twitter-url] [![tunnckoCore github][author-github-img]][author-github-url]
+
+[async-done]: https://github.com/gulpjs/async-done
+[dezalgo]: https://github.com/npm/dezalgo
+[end-of-stream]: https://github.com/mafintosh/end-of-stream
+[on-stream-end]: https://github.com/tunnckocore/on-stream-end
+[once]: https://github.com/isaacs/once
+[try-catch-callback]: https://github.com/tunnckocore/try-catch-callback
+[try-catch-core]: https://github.com/tunnckocore/try-catch-core
 
 [npmjs-url]: https://www.npmjs.com/package/always-done
 [npmjs-img]: https://img.shields.io/npm/v/always-done.svg?label=always-done
@@ -353,10 +364,3 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [new-message-url]: https://github.com/tunnckoCore/ama
 [new-message-img]: https://img.shields.io/badge/ask%20me-anything-green.svg
 
-[async-done]: https://github.com/gulpjs/async-done
-[dezalgo]: https://github.com/npm/dezalgo
-[end-of-stream]: https://github.com/mafintosh/end-of-stream
-[on-stream-end]: https://github.com/tunnckocore/on-stream-end
-[once]: https://github.com/isaacs/once
-[try-catch-callback]: https://github.com/tunnckocore/try-catch-callback
-[try-catch-core]: https://github.com/tunnckocore/try-catch-core
