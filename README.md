@@ -41,7 +41,7 @@ $ npm i always-done --save
 > For more use-cases see the [tests](./test.js)
 
 ```js
-const alwaysDone = requests('always-done')
+const alwaysDone = require('always-done')
 ```
 
 ## API
@@ -104,7 +104,7 @@ alwaysDone(async function () {
 ### Callbacks completion
 
 ```js
-var alwaysDone = requests('always-done')
+var alwaysDone = require('always-done')
 
 alwaysDone(function (cb) {
   fs.readFile('./package.json', 'utf8', cb)
