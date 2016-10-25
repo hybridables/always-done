@@ -1,6 +1,6 @@
 {
   "name": "always-done",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Handle completion and errors with elegance! Support for streams, callbacks, promises, child processes, async/await and sync functions. A drop-in replacement for [async-done][] - pass 100% of its tests plus more",
   "repository": "hybridables/always-done",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
