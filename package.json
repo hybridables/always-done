@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "assertit": "^0.1.0",
+    "bluebird": "^3.4.6",
     "commitizen": "^2.8.6",
     "coveralls": "^2.11.12",
     "cz-conventional-changelog": "^1.2.0",

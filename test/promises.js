@@ -9,17 +9,18 @@
 
 'use strict'
 
-let fs = require('mz/fs')
-let test = require('assertit')
-let path = require('path')
-let alwaysDone = require('../index')
+var fs = require('mz/fs')
+var Bluebird = require('bluebird')
+var test = require('assertit')
+var path = require('path')
+var alwaysDone = require('../index')
 
 function resolvedPromise () {
-  return Promise.resolve(123)
+  return Bluebird.resolve(123)
 }
 
 function rejectedPromise () {
-  return Promise.reject(new Error('promise error'))
+  return Bluebird.reject(new Error('promise error'))
 }
 
 function successReadFile () {

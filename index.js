@@ -7,7 +7,7 @@
 
 'use strict'
 
-let utils = require('./utils')
+var utils = require('./utils')
 
 module.exports = function alwaysDone (fn, done) {
   if (typeof done === 'function') {
@@ -26,7 +26,7 @@ module.exports = function alwaysDone (fn, done) {
 
       // handle promises
       if (utils.isPromise(val)) {
-        val.then((res) => {
+        val.then(function (res) {
           done(null, res)
         }, done)
         return

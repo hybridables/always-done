@@ -9,9 +9,9 @@
 
 'use strict'
 
-let test = require('assertit')
-let Observable = require('rx').Observable
-let alwaysDone = require('../index')
+var test = require('assertit')
+var Observable = require('rx').Observable
+var alwaysDone = require('../index')
 
 function success () {
   return Observable.empty()

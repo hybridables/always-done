@@ -9,16 +9,16 @@
 
 'use strict'
 
-let fs = require('fs')
-let path = require('path')
-let test = require('assertit')
-let through2 = require('through2')
-let alwaysDone = require('../index')
+var fs = require('fs')
+var path = require('path')
+var test = require('assertit')
+var through2 = require('through2')
+var alwaysDone = require('../index')
 
-let exists = path.join(__dirname, '../.gitignore')
-let notExists = path.join(__dirname, '../not_exists')
+var exists = path.join(__dirname, '../.gitignore')
+var notExists = path.join(__dirname, '../not_exists')
 
-let EndStream = through2.ctor(function (chunk, enc, cb) {
+var EndStream = through2.ctor(function (chunk, enc, cb) {
   this.push(chunk)
   cb()
 }, function (cb) {
@@ -27,12 +27,12 @@ let EndStream = through2.ctor(function (chunk, enc, cb) {
 })
 
 function success () {
-  let read = fs.createReadStream(exists)
+  var read = fs.createReadStream(exists)
   return read.pipe(new EndStream())
 }
 
 function failure () {
-  let read = fs.createReadStream(notExists)
+  var read = fs.createReadStream(notExists)
   return read.pipe(new EndStream())
 }
 

@@ -9,10 +9,10 @@
 
 'use strict'
 
-let fs = require('fs')
-let path = require('path')
-let test = require('assertit')
-let alwaysDone = require('../index')
+var fs = require('fs')
+var path = require('path')
+var test = require('assertit')
+var alwaysDone = require('../index')
 
 function successJsonParse () {
   return JSON.parse('{"foo":"bar"}')

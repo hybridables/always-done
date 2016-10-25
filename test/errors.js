@@ -9,8 +9,8 @@
 
 'use strict'
 
-let test = require('assertit')
-let alwaysDone = require('../index')
+var test = require('assertit')
+var alwaysDone = require('../index')
 
 test('should throw TypeError if `fn` not function', function (done) {
   function fixture () {

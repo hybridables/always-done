@@ -22,13 +22,13 @@ utils.subscribe = function subscribe (val, done) {
     onNext.state = state
   }
 
-  val.subscribe(onNext, done, function () {
+  val.subscribe(onNext, done, function observableCallback () {
     done(null, onNext.state)
   })
 }
 
 utils.handleStreams = function handleStreams (val, done) {
-  let stream = utils.streamExhaust(val)
+  var stream = utils.streamExhaust(val)
 
   process.once('newListener', function onNewListener (name) {
     this.removeAllListeners(name)
