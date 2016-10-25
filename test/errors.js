@@ -1,7 +1,7 @@
 /*!
  * always-done <https://github.com/hybridables/always-done>
  *
- * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
+ * Copyright (c) 2015-2016 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
  */
 
@@ -9,8 +9,8 @@
 
 'use strict'
 
-var test = require('assertit')
-var alwaysDone = require('../index')
+let test = require('mukla')
+let alwaysDone = require('../index')
 
 test('should throw TypeError if `fn` not function', function (done) {
   function fixture () {
@@ -18,17 +18,17 @@ test('should throw TypeError if `fn` not function', function (done) {
   }
 
   test.throws(fixture, TypeError)
-  test.throws(fixture, /expect `fn` to be function/)
+  test.throws(fixture, /expect `fn` to be a function/)
   done()
 })
 
 test('should throw TypeError if `callback` not function', function (done) {
   function fixture () {
-    alwaysDone(function () {}, 123)
+    alwaysDone(function () {}, 123)(111)
   }
 
   test.throws(fixture, TypeError)
-  test.throws(fixture, /expect `callback` to be function/)
+  test.throws(fixture, /expect `callback` to be a function/)
   done()
 })
 

@@ -1,7 +1,7 @@
 /*!
  * always-done <https://github.com/hybridables/always-done>
  *
- * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
+ * Copyright (c) 2015-2016 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
  */
 
@@ -9,9 +9,9 @@
 
 'use strict'
 
-var test = require('assertit')
-var Observable = require('rx').Observable
-var alwaysDone = require('../index')
+let test = require('mukla')
+let Observable = require('rx').Observable
+let alwaysDone = require('../index')
 
 function success () {
   return Observable.empty()
