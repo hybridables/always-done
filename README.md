@@ -27,6 +27,7 @@
   * [Child Process](#child-process)
   * [Handling native errors](#handling-native-errors)
   * [Always completes](#always-completes)
+- [Related](#related)
 - [Contributing](#contributing)
 
 ## Install
@@ -303,6 +304,16 @@ alwaysDone(function () {}, function (err, res) {
 })
 ```
 
+## Related
+- [async-done](https://www.npmjs.com/package/async-done): Force async using nextTick and normalize completion/errors for callbacks, promises, observables, child… [more](https://github.com/gulpjs/async-done#readme) | [homepage](https://github.com/gulpjs/async-done#readme "Force async using nextTick and normalize completion/errors for callbacks, promises, observables, child processes and streams.")
+- [base](https://www.npmjs.com/package/base): base is the foundation for creating modular, unit testable and highly pluggable… [more](https://github.com/node-base/base) | [homepage](https://github.com/node-base/base "base is the foundation for creating modular, unit testable and highly pluggable node.js applications, starting with a handful of common methods, like `set`, `get`, `del` and `use`.")
+- [end-of-stream](https://www.npmjs.com/package/end-of-stream): Call a callback when a readable/writable/duplex stream has completed or failed. | [homepage](https://github.com/mafintosh/end-of-stream "Call a callback when a readable/writable/duplex stream has completed or failed.")
+- [is-node-stream](https://www.npmjs.com/package/is-node-stream): Strictly and correctly checks if value is a nodejs stream. | [homepage](https://github.com/tunnckocore/is-node-stream#readme "Strictly and correctly checks if value is a nodejs stream.")
+- [minibase](https://www.npmjs.com/package/minibase): MiniBase is minimalist approach to Base - @node-base, the awesome framework. Foundation… [more](https://github.com/node-minibase/minibase#readme) | [homepage](https://github.com/node-minibase/minibase#readme "MiniBase is minimalist approach to Base - @node-base, the awesome framework. Foundation for building complex APIs with small units called plugins. Works well with most of the already existing [base][] plugins.")
+- [on-stream-end](https://www.npmjs.com/package/on-stream-end): Handles completion and errors of any stream - readable/writable/duplex. | [homepage](https://github.com/tunnckocore/on-stream-end#readme "Handles completion and errors of any stream - readable/writable/duplex.")
+- [try-catch-callback](https://www.npmjs.com/package/try-catch-callback): try/catch block with a callback, used in [try-catch-core][]. Use it when you… [more](https://github.com/tunnckocore/try-catch-callback#readme) | [homepage](https://github.com/tunnckocore/try-catch-callback#readme "try/catch block with a callback, used in [try-catch-core][]. Use it when you don't care about asyncness so much and don't want guarantees. If you care use [try-catch-core][].")
+- [try-catch-core](https://www.npmjs.com/package/try-catch-core): Asynchronous and sync tryCatch in one place. The callback is securely wrapped… [more](https://github.com/tunnckocore/try-catch-core#readme) | [homepage](https://github.com/tunnckocore/try-catch-core#readme "Asynchronous and sync tryCatch in one place. The callback is securely wrapped with a [dezalgo][] and [once][].")
+
 ## Contributing
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/hybridables/always-done/issues/new).  
 But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guidelines.
@@ -364,3 +375,4 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [new-message-url]: https://github.com/tunnckoCore/ama
 [new-message-img]: https://img.shields.io/badge/ask%20me-anything-green.svg
 
+[base]: https://github.com/node-base/base

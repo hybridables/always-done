@@ -66,11 +66,17 @@
     "tasks": [
       "readme"
     ],
-    "lint": {
-      "reflinks": true
-    },
     "related": {
-      "list": []
+      "list": [
+        "base",
+        "minibase",
+        "on-stream-end",
+        "is-node-stream",
+        "end-of-stream",
+        "async-done",
+        "try-catch-core",
+        "try-catch-callback"
+      ]
     },
     "reflinks": [
       "async-done",
@@ -80,6 +86,9 @@
       "once",
       "try-catch-callback",
       "try-catch-core"
-    ]
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }
