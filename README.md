@@ -1,12 +1,12 @@
-# [always-done][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] [![npm downloads][downloads-img]][downloads-url] 
-
 <p align="center">
   <a href="https://github.com/hybridables">
     <img height="250" width="250" src="https://avatars1.githubusercontent.com/u/10666022?v=3&s=250">
   </a>
 </p>
 
-> Handle completion and errors with elegance! Support for streams, callbacks, promises, child processes, async and sync functions. A drop-in replacement for [async-done][] - pass 100% of its tests plus more
+# [always-done][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] [![npm downloads][downloads-img]][downloads-url] 
+
+> Handle completion and errors with elegance! Support for streams, callbacks, promises, child processes, async/await and sync functions. A drop-in replacement for [async-done][] - pass 100% of its tests plus more
 
 [![code climate][codeclimate-img]][codeclimate-url] [![standard code style][standard-img]][standard-url] [![travis build status][travis-img]][travis-url] [![coverage status][coveralls-img]][coveralls-url] [![dependency status][david-img]][david-url]
 
