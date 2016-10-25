@@ -9,6 +9,36 @@
 
 var utils = require('./utils')
 
+/**
+ * > Handle completion of `fn` and optionally
+ * pass `done` callback, otherwise it returns a thunk.
+ * If that `thunk` does not accept function, it returns
+ * another thunk until you pass `done` to it.
+ *
+ * **Example**
+ *
+ * ```js
+ * var alwaysDone = require('always-done')
+ *
+ * alwaysDone(function (cb) {
+ *   cb(null, 123)
+ * }, function done (err, res) {
+ *   console.log(err, res) // => null, 123
+ * })
+ *
+ * alwaysDone(function (cb) {
+ *   cb(new Error('foo bar'))
+ * }, function done (err) {
+ *   console.log(err) // => Error: foo bar
+ * })
+ * ```
+ *
+ * @param  {Function} `<fn>` function to be called
+ * @param  {Function} `[done]` on completion
+ * @return {Function} thunk until you pass `done` to that thunk
+ * @api public
+ */
+
 module.exports = function alwaysDone (fn, done) {
   if (typeof done === 'function') {
     utils.tryCatchCore(fn, function cb (err, val) {

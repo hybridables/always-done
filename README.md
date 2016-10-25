@@ -1,4 +1,4 @@
-# [{%= name %}][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] [![npm downloads][downloads-img]][downloads-url] 
+# [always-done][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] [![npm downloads][downloads-img]][downloads-url] 
 
 <p align="center">
   <a href="https://github.com/hybridables">
@@ -6,29 +6,84 @@
   </a>
 </p>
 
-> {%= description %}
+> Handle completion and errors with elegance! Support for streams, callbacks, promises, child processes, async and sync functions. A drop-in replacement for [async-done][] - pass 100% of its tests plus more
 
 [![code climate][codeclimate-img]][codeclimate-url] [![standard code style][standard-img]][standard-url] [![travis build status][travis-img]][travis-url] [![coverage status][coveralls-img]][coveralls-url] [![dependency status][david-img]][david-url]
 
 ## Table of Contents
-<!-- toc -->
+- [Install](#install)
+- [Usage](#usage)
+- [API](#api)
+  * [alwaysDone](#alwaysdone)
+- [Background](#background)
+- [Resolution](#resolution)
+- [Support](#support)
+  * [async/await completion](#asyncawait-completion)
+  * [Callbacks completion](#callbacks-completion)
+  * [Synchronous functions](#synchronous-functions)
+    + [Returning a value](#returning-a-value)
+    + [Returning an error](#returning-an-error)
+  * [Promises](#promises)
+    + [Returning a resolved Promise](#returning-a-resolved-promise)
+    + [Returning a rejected Promise](#returning-a-rejected-promise)
+  * [Streams](#streams)
+    + [Unpiped streams](#unpiped-streams)
+    + [Failing unpiped streams](#failing-unpiped-streams)
+    + [Failing piped streams](#failing-piped-streams)
+  * [Observables](#observables)
+    + [Empty observable](#empty-observable)
+    + [Successful observable](#successful-observable)
+    + [Failing observable](#failing-observable)
+  * [Child Process](#child-process)
+    + [Successful exec](#successful-exec)
+    + [Failing exec](#failing-exec)
+    + [Failing spawn](#failing-spawn)
+  * [Handling native errors](#handling-native-errors)
+  * [Always completes](#always-completes)
+- [Contributing](#contributing)
 
 ## Install
 > Install with [npm](https://www.npmjs.com/)
 
 ```sh
-$ npm i {%= name %} --save
+$ npm i always-done --save
 ```
 
 ## Usage
 > For more use-cases see the [tests](./test.js)
 
 ```js
-const alwaysDone = requests('{%= name %}')
+const alwaysDone = requests('always-done')
 ```
 
 ## API
-{%= apidocs('index.js') %}
+
+### [alwaysDone](index.js#L42)
+> Handle completion of `fn` and optionally pass `done` callback, otherwise it returns a thunk. If that `thunk` does not accept function, it returns another thunk until you pass `done` to it.
+
+**Params**
+
+* `<fn>` **{Function}**: function to be called    
+* `[done]` **{Function}**: on completion    
+* `returns` **{Function}**: thunk until you pass `done` to that thunk  
+
+**Example**
+
+```js
+var alwaysDone = require('always-done')
+
+alwaysDone(function (cb) {
+  cb(null, 123)
+}, function done (err, res) {
+  console.log(err, res) // => null, 123
+})
+
+alwaysDone(function (cb) {
+  cb(new Error('foo bar'))
+}, function done (err) {
+  console.log(err) // => Error: foo bar
+})
+```
 
 ## Background
 
@@ -245,64 +300,63 @@ alwaysDone(function () {}, function (err, res) {
 })
 ```
 
-{% if (verb.related && verb.related.list && verb.related.list.length) { %}
-## Related
-{%= related(verb.related.list, {words: 12}) %}
-{% } %}
-
 ## Contributing
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/{%= repository %}/issues/new).  
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/hybridables/always-done/issues/new).  
 But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guidelines.
 
 ## [Charlike Make Reagent](http://j.mp/1stW47C) [![new message to charlike][new-message-img]][new-message-url] [![freenode #charlike][freenode-img]][freenode-url]
 
-[![{%= author.username %}.tk][author-www-img]][author-www-url] [![keybase {%= author.username %}][keybase-img]][keybase-url] [![{%= author.username %} npm][author-npm-img]][author-npm-url] [![{%= author.username %} twitter][author-twitter-img]][author-twitter-url] [![{%= author.username %} github][author-github-img]][author-github-url]
+[![tunnckoCore.tk][author-www-img]][author-www-url] [![keybase tunnckoCore][keybase-img]][keybase-url] [![tunnckoCore npm][author-npm-img]][author-npm-url] [![tunnckoCore twitter][author-twitter-img]][author-twitter-url] [![tunnckoCore github][author-github-img]][author-github-url]
 
-{%= reflinks(verb.reflinks) %}
+[npmjs-url]: https://www.npmjs.com/package/always-done
+[npmjs-img]: https://img.shields.io/npm/v/always-done.svg?label=always-done
 
-[npmjs-url]: https://www.npmjs.com/package/{%= name %}
-[npmjs-img]: https://img.shields.io/npm/v/{%= name %}.svg?label={%= name %}
+[license-url]: https://github.com/hybridables/always-done/blob/master/LICENSE
+[license-img]: https://img.shields.io/npm/l/always-done.svg
 
-[license-url]: https://github.com/{%= repository %}/blob/master/LICENSE
-[license-img]: https://img.shields.io/npm/l/{%= name %}.svg
+[downloads-url]: https://www.npmjs.com/package/always-done
+[downloads-img]: https://img.shields.io/npm/dm/always-done.svg
 
-[downloads-url]: https://www.npmjs.com/package/{%= name %}
-[downloads-img]: https://img.shields.io/npm/dm/{%= name %}.svg
+[codeclimate-url]: https://codeclimate.com/github/hybridables/always-done
+[codeclimate-img]: https://img.shields.io/codeclimate/github/hybridables/always-done.svg
 
+[travis-url]: https://travis-ci.org/hybridables/always-done
+[travis-img]: https://img.shields.io/travis/hybridables/always-done/master.svg
 
-[codeclimate-url]: https://codeclimate.com/github/{%= repository %}
-[codeclimate-img]: https://img.shields.io/codeclimate/github/{%= repository %}.svg
+[coveralls-url]: https://coveralls.io/r/hybridables/always-done
+[coveralls-img]: https://img.shields.io/coveralls/hybridables/always-done.svg
 
-[travis-url]: https://travis-ci.org/{%= repository %}
-[travis-img]: https://img.shields.io/travis/{%= repository %}/master.svg
-
-[coveralls-url]: https://coveralls.io/r/{%= repository %}
-[coveralls-img]: https://img.shields.io/coveralls/{%= repository %}.svg
-
-[david-url]: https://david-dm.org/{%= repository %}
-[david-img]: https://img.shields.io/david/{%= repository %}.svg
+[david-url]: https://david-dm.org/hybridables/always-done
+[david-img]: https://img.shields.io/david/hybridables/always-done.svg
 
 [standard-url]: https://github.com/feross/standard
 [standard-img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 
+[author-www-url]: http://www.tunnckocore.tk
+[author-www-img]: https://img.shields.io/badge/www-tunnckocore.tk-fe7d37.svg
 
-[author-www-url]: http://www.{%= author.username.toLowerCase() %}.tk
-[author-www-img]: https://img.shields.io/badge/www-{%= author.username.toLowerCase() %}.tk-fe7d37.svg
+[keybase-url]: https://keybase.io/tunnckocore
+[keybase-img]: https://img.shields.io/badge/keybase-tunnckocore-8a7967.svg
 
-[keybase-url]: https://keybase.io/{%= author.username.toLowerCase() %}
-[keybase-img]: https://img.shields.io/badge/keybase-{%= author.username.toLowerCase() %}-8a7967.svg
+[author-npm-url]: https://www.npmjs.com/~tunnckocore
+[author-npm-img]: https://img.shields.io/badge/npm-~tunnckocore-cb3837.svg
 
-[author-npm-url]: https://www.npmjs.com/~{%= author.username.toLowerCase() %}
-[author-npm-img]: https://img.shields.io/badge/npm-~{%= author.username.toLowerCase() %}-cb3837.svg
+[author-twitter-url]: https://twitter.com/tunnckoCore
+[author-twitter-img]: https://img.shields.io/badge/twitter-@tunnckoCore-55acee.svg
 
-[author-twitter-url]: https://twitter.com/{%= author.username %}
-[author-twitter-img]: https://img.shields.io/badge/twitter-@{%= author.username %}-55acee.svg
-
-[author-github-url]: https://github.com/{%= author.username %}
-[author-github-img]: https://img.shields.io/badge/github-@{%= author.username %}-4183c4.svg
+[author-github-url]: https://github.com/tunnckoCore
+[author-github-img]: https://img.shields.io/badge/github-@tunnckoCore-4183c4.svg
 
 [freenode-url]: http://webchat.freenode.net/?channels=charlike
 [freenode-img]: https://img.shields.io/badge/freenode-%23charlike-5654a4.svg
 
-[new-message-url]: https://github.com/{%= author.username %}/ama
+[new-message-url]: https://github.com/tunnckoCore/ama
 [new-message-img]: https://img.shields.io/badge/ask%20me-anything-green.svg
+
+[async-done]: https://github.com/gulpjs/async-done
+[dezalgo]: https://github.com/npm/dezalgo
+[end-of-stream]: https://github.com/mafintosh/end-of-stream
+[on-stream-end]: https://github.com/tunnckocore/on-stream-end
+[once]: https://github.com/isaacs/once
+[try-catch-callback]: https://github.com/tunnckocore/try-catch-callback
+[try-catch-core]: https://github.com/tunnckocore/try-catch-core
