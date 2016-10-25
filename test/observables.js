@@ -9,7 +9,7 @@
 
 'use strict'
 
-let test = require('mukla')
+let test = require('assertit')
 let Observable = require('rx').Observable
 let alwaysDone = require('../index')
 

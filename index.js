@@ -24,13 +24,6 @@ module.exports = function alwaysDone (fn, done) {
         return
       }
 
-      if (val && typeof val.subscribe === 'function') {
-        utils.tryCatchCore(function (cb) {
-          utils.subscribe(val, cb)
-        }, done)
-        return
-      }
-
       // handle promises
       if (utils.isPromise(val)) {
         val.then((res) => {
@@ -39,11 +32,19 @@ module.exports = function alwaysDone (fn, done) {
         return
       }
 
+      // handle observables
+      if (val && typeof val.subscribe === 'function') {
+        utils.tryCatchCore(function (cb) {
+          utils.subscribe(val, cb)
+        }, done)
+        return
+      }
+
       // handle streams
-      // if (isNodeStream(val) || isChildProcess(val)) {
-      //   // @todo
-      //   return
-      // }
+      if (utils.isNodeStream(val) || utils.isChildProcess(val)) {
+        utils.handleStreams(val, done)
+        return
+      }
 
       // handle sync
       done(null, val)
@@ -52,9 +53,6 @@ module.exports = function alwaysDone (fn, done) {
   }
 
   return function thunk (cb) {
-    if (typeof cb !== 'function') {
-      throw new TypeError('always-done: expect `callback` to be a function')
-    }
     return alwaysDone(fn, cb)
   }
 }

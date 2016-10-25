@@ -32,7 +32,6 @@ function spawnFail () {
 test('should handle successful exec', function (done) {
   alwaysDone(execSuccess, function (err, res) {
     test.ifError(err)
-    test.strictEqual(err, null)
     test.strictEqual(res, undefined)
     done()
   })
@@ -51,7 +50,6 @@ test('should handle failing exec', function (done) {
 test('should handle successful spawn', function (done) {
   alwaysDone(spawnSuccess, function (err, res) {
     test.ifError(err)
-    test.strictEqual(err, null)
     test.strictEqual(res, undefined)
     done()
   })

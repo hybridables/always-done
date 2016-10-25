@@ -10,7 +10,7 @@
 'use strict'
 
 let fs = require('mz/fs')
-let test = require('mukla')
+let test = require('assertit')
 let path = require('path')
 let alwaysDone = require('../index')
 

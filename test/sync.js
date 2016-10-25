@@ -11,7 +11,7 @@
 
 let fs = require('fs')
 let path = require('path')
-let test = require('mukla')
+let test = require('assertit')
 let alwaysDone = require('../index')
 
 function successJsonParse () {

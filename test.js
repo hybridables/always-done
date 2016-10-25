@@ -11,13 +11,14 @@
 
 require('./test/callbacks')
 
-// require('./test/child_processes') // @todo
+require('./test/child_processes')
+
 require('./test/errors')
 
 require('./test/observables')
 
 require('./test/promises')
 
-// require('./test/streams') // @todo
+require('./test/streams')
 
 require('./test/sync')

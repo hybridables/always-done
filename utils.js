@@ -8,8 +8,12 @@ require = utils // eslint-disable-line no-undef, no-native-reassign, no-global-a
  * Lazily required module dependencies
  */
 
+require('is-child-process')
+require('is-node-stream')
 require('is-promise')
 require('is-typeof-error')
+require('on-stream-end')
+require('stream-exhaust')
 require('try-catch-core')
 require = fn // eslint-disable-line no-undef, no-native-reassign, no-global-assign
 
@@ -21,6 +25,19 @@ utils.subscribe = function subscribe (val, done) {
   val.subscribe(onNext, done, function () {
     done(null, onNext.state)
   })
+}
+
+utils.handleStreams = function handleStreams (val, done) {
+  let stream = utils.streamExhaust(val)
+
+  process.once('newListener', function onNewListener (name) {
+    this.removeAllListeners(name)
+  })
+  process.once('uncaughtException', function onerror (err) {
+    stream.emit('error', err)
+  })
+
+  utils.onStreamEnd(stream, done)
 }
 
 /**

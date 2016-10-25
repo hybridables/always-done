@@ -1,7 +1,7 @@
 /*!
  * always-done <https://github.com/hybridables/always-done>
  *
- * Copyright (c) 2015 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
+ * Copyright (c) 2015-2016 Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)
  * Released under the MIT license.
  */
 
@@ -44,10 +44,29 @@ function unpipedFailure () {
   return fs.createReadStream(notExists)
 }
 
+test('should handle an error unpiped readable stream', function (done) {
+  alwaysDone(unpipedFailure, function (err, res) {
+    test.ifError(!err)
+    test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
+    test.strictEqual(res, undefined)
+    done()
+  })
+})
+
+test('should handle an errored stream', function (done) {
+  alwaysDone(failure, function (err, res) {
+    test.ifError(!err)
+    test.ok(err instanceof Error)
+    test.strictEqual(err.code, 'ENOENT')
+    test.strictEqual(res, undefined)
+    done()
+  })
+})
+
 test('should handle a successful stream', function (done) {
   alwaysDone(success, function (err, res) {
     test.ifError(err)
-    test.strictEqual(err, null)
     test.strictEqual(res, undefined)
     done()
   })
@@ -68,30 +87,9 @@ test('should handle a successful stream and call the callback once', function (d
   })
 })
 
-test('should handle an errored stream', function (done) {
-  alwaysDone(failure, function (err, res) {
-    test.ifError(!err)
-    test.ok(err instanceof Error)
-    test.strictEqual(err.code, 'ENOENT')
-    test.strictEqual(res, undefined)
-    done()
-  })
-})
-
-test('should handle an error unpiped readable stream', function (done) {
-  alwaysDone(unpipedFailure, function (err, res) {
-    test.ifError(!err)
-    test.ok(err instanceof Error)
-    test.strictEqual(err.code, 'ENOENT')
-    test.strictEqual(res, undefined)
-    done()
-  })
-})
-
 test('should consume an unpiped readable stream', function (done) {
   alwaysDone(unpiped, function (err, res) {
     test.ifError(err)
-    test.strictEqual(err, null)
     test.strictEqual(res, undefined)
     done()
   })

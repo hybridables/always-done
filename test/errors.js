@@ -9,7 +9,7 @@
 
 'use strict'
 
-let test = require('mukla')
+let test = require('assertit')
 let alwaysDone = require('../index')
 
 test('should throw TypeError if `fn` not function', function (done) {
@@ -19,16 +19,6 @@ test('should throw TypeError if `fn` not function', function (done) {
 
   test.throws(fixture, TypeError)
   test.throws(fixture, /expect `fn` to be a function/)
-  done()
-})
-
-test('should throw TypeError if `callback` not function', function (done) {
-  function fixture () {
-    alwaysDone(function () {}, 123)(111)
-  }
-
-  test.throws(fixture, TypeError)
-  test.throws(fixture, /expect `callback` to be a function/)
   done()
 })
 

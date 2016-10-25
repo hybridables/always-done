@@ -11,7 +11,7 @@
 
 let fs = require('fs')
 let path = require('path')
-let test = require('mukla')
+let test = require('assertit')
 let alwaysDone = require('../index')
 
 function successJsonParse (callback) {
@@ -73,7 +73,7 @@ test('should not spread arrays - e.g. cb(null, [1, 2], 3)', function (done) {
 })
 
 test('should handle result of `fs.readFile`', function (done) {
-  alwaysDone(readFile, function (err, res) {
+  alwaysDone(readFile)(function (err, res) {
     test.ifError(err)
     test.equal(typeof res, 'string')
     test.ok(res.indexOf('"license": "MIT"') !== -1)
@@ -81,11 +81,11 @@ test('should handle result of `fs.readFile`', function (done) {
   })
 })
 
-test('should handle buffer result from `fs.readFile` passed directly', function (done) {
-  alwaysDone(fs.readFile, path.join(__dirname, '../package.json'), function (err, res) {
-    test.ifError(err)
-    test.ok(Buffer.isBuffer(res))
-    test.ok(res.toString('utf8').indexOf('"license": "MIT"') !== -1)
-    done()
-  })
-})
+// test('should handle buffer result from `fs.readFile` passed directly', function (done) {
+//   alwaysDone(fs.readFile, path.join(__dirname, '../package.json'), function (err, res) {
+//     test.ifError(err)
+//     test.ok(Buffer.isBuffer(res))
+//     test.ok(res.toString('utf8').indexOf('"license": "MIT"') !== -1)
+//     done()
+//   })
+// })
