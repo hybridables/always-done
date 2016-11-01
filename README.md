@@ -13,20 +13,23 @@
 ## Table of Contents
 - [Install](#install)
 - [Usage](#usage)
-- [API](#api)
-  * [alwaysDone](#alwaysdone)
 - [Background](#background)
 - [Resolution](#resolution)
-- [Support](#support)
-  * [async/await completion](#asyncawait-completion)
+- [API](#api)
+  * [alwaysDone](#alwaysdone)
+- [Supports](#supports)
+  * [Handles `async/await` completion](#handles-asyncawait-completion)
   * [Callbacks completion](#callbacks-completion)
-  * [Synchronous functions](#synchronous-functions)
-  * [Promises](#promises)
-  * [Streams](#streams)
-  * [Observables](#observables)
-  * [Child Process](#child-process)
-  * [Handling native errors](#handling-native-errors)
+  * [Completion of synchronous functions](#completion-of-synchronous-functions)
+  * [Completion of Promises](#completion-of-promises)
+  * [Streams completion](#streams-completion)
+  * [Handles completion of Observables](#handles-completion-of-observables)
+  * [Completion of Child Process](#completion-of-child-process)
+  * [Handling errors](#handling-errors)
   * [Always completes](#always-completes)
+  * [Passing custom context](#passing-custom-context)
+  * [Passing custom arguments](#passing-custom-arguments)
+  * [Returning a thunk](#returning-a-thunk)
 - [Related](#related)
 - [Contributing](#contributing)
 
@@ -41,35 +44,16 @@ $ npm i always-done --save
 > For more use-cases see the [tests](./test.js)
 
 ```js
+const fs = require('fs')
 const alwaysDone = require('always-done')
-```
 
-## API
+alwaysDone((cb) => {
+  fs.readFile('./package.json', 'utf8', cb)
+}, (err, res) => {
+  if (err) return console.error(err)
 
-### [alwaysDone](index.js#L42)
-> Handle completion of `fn` and optionally pass `done` callback, otherwise it returns a thunk. If that `thunk` does not accept function, it returns another thunk until you pass `done` to it.
-
-**Params**
-
-* `<fn>` **{Function}**: function to be called    
-* `[done]` **{Function}**: on completion    
-* `returns` **{Function}**: thunk until you pass `done` to that thunk  
-
-**Example**
-
-```js
-var alwaysDone = require('always-done')
-
-alwaysDone(function (cb) {
-  cb(null, 123)
-}, function done (err, res) {
-  console.log(err, res) // => null, 123
-})
-
-alwaysDone(function (cb) {
-  cb(new Error('foo bar'))
-}, function done (err) {
-  console.log(err) // => Error: foo bar
+  let json = JSON.parse(res)
+  console.log(json.name) // => 'always-done'
 })
 ```
 
@@ -81,15 +65,60 @@ In the first one, we just calls a function inside try/catch and calls `done` cal
 
 About second one, there we wraps the `done` callback with [once][] and [dezalgo][] to ensure it will be called in the next tick.
 
-Here, in `always-done`, we just give a `callback` to that [try-catch-core][] package and "listen" what are the result. Actually we not listening anything, we just make a few checks to understand what the incoming value is - promise, child process, stream, observable and etc.
+Here, in `always-done`, we just give a `callback` to that [try-catch-core][] package and "listen" what is the result. Actually we not listening anything, we just make a few checks to understand what the incoming value is - promise, child process, stream, observable and etc.
 
 ## Resolution
 
 Nothing so magical. Try/catch block for most of the things works briliant. And [on-stream-end][] module (which is drop-in replacement for [end-of-stream][]) for streams and child processes.
 
-## Support
+**[back to top](#readme)**
 
-### async/await completion
+## API
+
+### [alwaysDone](index.js#L55)
+> Handle completion of `fn` and optionally pass `done` callback, otherwise it returns a thunk. If that `thunk` does not accept function, it returns another thunk until you pass `done` to it.
+
+**Params**
+
+* `<fn>` **{Function}**: function to be called    
+* `[opts]` **{Object}**: optional options, such as `context` and `args`, passed to [try-catch-core][]    
+* `[opts.context]` **{Object}**: context to be passed to `fn`    
+* `[opts.args]` **{Array}**: custom argument(s) to be pass to `fn`, given value is arrayified    
+* `[opts.passCallback]` **{Boolean}**: pass `true` if you want `cb` to be passed to `fn` args    
+* `[done]` **{Function}**: on completion    
+* `returns` **{Function}**: thunk until you pass `done` to that thunk  
+
+**Example**
+
+```js
+var alwaysDone = require('always-done')
+var options = {
+  context: { num: 123, bool: true }
+  args: [require('assert')]
+}
+
+alwaysDone(function (assert, next) {
+  assert.strictEqual(this.num, 123)
+  assert.strictEqual(this.bool, true)
+  next()
+}, options, function (err) {
+  console.log(err, 'done') // => null, 'done'
+})
+
+alwaysDone(function (cb) {
+  cb(new Error('foo bar'))
+}, function done (err) {
+  console.log(err) // => Error: foo bar
+})
+
+```
+
+**[back to top](#readme)**
+
+## Supports
+> Handles completion and errors of async/await, synchronous and asynchronous (callback) functions, also functions that returns streams, promises, child process and observables.
+
+### Handles `async/await` completion
 
 ```js
 alwaysDone(async function () {
@@ -99,7 +128,7 @@ alwaysDone(async function () {
 })
 ```
 
-**[back to top](#table-of-contents)**
+**[back to top](#readme)**
 
 ### Callbacks completion
 
@@ -116,9 +145,9 @@ alwaysDone(function (cb) {
 })
 ```
 
-**[back to top](#table-of-contents)**
+**[back to top](#readme)**
 
-### Synchronous functions
+### Completion of synchronous functions
 
 #### Returning a value
 
@@ -140,9 +169,9 @@ alwaysDone(function () {
 })
 ```
 
-**[back to top](#table-of-contents)**
+**[back to top](#readme)**
 
-### Promises
+### Completion of Promises
 
 #### Returning a resolved Promise
 
@@ -164,9 +193,10 @@ alwaysDone(function () {
 })
 ```
 
-**[back to top](#table-of-contents)**
+**[back to top](#readme)**
 
-### Streams
+### Streams completion
+> Using [on-stream-end][] and [stream-exhaust][]
 
 #### Unpiped streams
 
@@ -201,9 +231,10 @@ alwaysDone(function () {
 })
 ```
 
-**[back to top](#table-of-contents)**
+**[back to top](#readme)**
 
-### Observables
+### Handles completion of Observables
+> Using `.subscribe` method of the observable
 
 #### Empty observable
 ```js
@@ -236,9 +267,10 @@ alwaysDone(function () {
 })
 ```
 
-**[back to top](#table-of-contents)**
+**[back to top](#readme)**
 
-### Child Process
+### Completion of Child Process
+> Basically, they are streams, so completion is handled using [on-stream-end][] which is drop-in replacement for [end-of-stream][]
 
 #### Successful exec
 
@@ -276,13 +308,15 @@ alwaysDone(function () {
 })
 ```
 
-**[back to top](#table-of-contents)**
+**[back to top](#readme)**
 
-### Handling native errors
+### Handling errors
+
+#### uncaught exceptions
 
 ```js
 alwaysDone(function () {
-  foo
+  foo // ReferenceError
   return 55
 }, function (err) {
   console.log(err.name)
@@ -290,10 +324,21 @@ alwaysDone(function () {
 })
 ```
 
-**[back to top](#table-of-contents)**
+#### thrown errors
+
+```js
+alwaysDone(function () {
+  JSON.parse('{"foo":')
+}, function (err) {
+  console.log(err)
+  // => SyntaxError: Unexpected end of JSON input
+})
+```
+
+**[back to top](#readme)**
 
 ### Always completes
-> It may looks strange, but it's logical.
+> It may looks strange, but it's logical. If you pass empty function it just completes with `undefined` result and `null` error.
 
 **Example**
 
@@ -303,6 +348,64 @@ alwaysDone(function () {}, function (err, res) {
   console.log(err, res) // => null, undefined
 })
 ```
+
+**[back to top](#readme)**
+
+### Passing custom context
+
+```js
+var alwaysDone = require('always-done')
+var opts = {
+  context: { foo: 'bar' }
+}
+
+alwaysDone(function () {
+  console.log(this.foo) // => 'bar'
+}, opts, function done () {
+  console.log('end')
+})
+```
+
+**[back to top](#readme)**
+
+### Passing custom arguments
+> It may be strange, but this allows you to pass more arguments to that first function and the last argument always will be "callback" until `fn` is async or sync but with `passCallback: true` option.
+
+```js
+var alwaysDone = require('always-done')
+var options = {
+  args: [1, 2]
+}
+
+alwaysDone(function (a, b) {
+  console.log(arguments.length) // => 2
+  console.log(a) // => 1
+  console.log(b) // => 2
+
+  return a + b + 3
+}, options, function done (e, res) {
+  console.log(res) // => 9
+})
+```
+
+**[back to top](#readme)**
+
+### Returning a thunk
+> Can be used as _thunkify_ lib without problems, just don't pass a done callback.
+
+```js
+var fs = require('fs')
+var alwaysDone = require('always-done')
+var readFileThunk = alwaysDone(function (cb) {
+  fs.readFile('./package.json', cb)
+})
+
+readFileThunk(function done (err, res) {
+  console.log(err, res) // => null, Buffer
+})
+```
+
+**[back to top](#readme)**
 
 ## Related
 - [async-done](https://www.npmjs.com/package/async-done): Force async using nextTick and normalize completion/errors for callbacks, promises, observables, child… [more](https://github.com/gulpjs/async-done#readme) | [homepage](https://github.com/gulpjs/async-done#readme "Force async using nextTick and normalize completion/errors for callbacks, promises, observables, child processes and streams.")
@@ -323,10 +426,12 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [![tunnckoCore.tk][author-www-img]][author-www-url] [![keybase tunnckoCore][keybase-img]][keybase-url] [![tunnckoCore npm][author-npm-img]][author-npm-url] [![tunnckoCore twitter][author-twitter-img]][author-twitter-url] [![tunnckoCore github][author-github-img]][author-github-url]
 
 [async-done]: https://github.com/gulpjs/async-done
+[base]: https://github.com/node-base/base
 [dezalgo]: https://github.com/npm/dezalgo
 [end-of-stream]: https://github.com/mafintosh/end-of-stream
 [on-stream-end]: https://github.com/tunnckocore/on-stream-end
 [once]: https://github.com/isaacs/once
+[stream-exhaust]: https://github.com/chrisdickinson/stream-exhaust.git
 [try-catch-callback]: https://github.com/tunnckocore/try-catch-callback
 [try-catch-core]: https://github.com/tunnckocore/try-catch-core
 
@@ -375,4 +480,3 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [new-message-url]: https://github.com/tunnckoCore/ama
 [new-message-img]: https://img.shields.io/badge/ask%20me-anything-green.svg
 
-[base]: https://github.com/node-base/base

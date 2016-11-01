@@ -19,11 +19,17 @@ var utils = require('./utils')
  *
  * ```js
  * var alwaysDone = require('always-done')
+ * var options = {
+ *   context: { num: 123, bool: true }
+ *   args: [require('assert')]
+ * }
  *
- * alwaysDone(function (cb) {
- *   cb(null, 123)
- * }, function done (err, res) {
- *   console.log(err, res) // => null, 123
+ * alwaysDone(function (assert, next) {
+ *   assert.strictEqual(this.num, 123)
+ *   assert.strictEqual(this.bool, true)
+ *   next()
+ * }, options, function (err) {
+ *   console.log(err, 'done') // => null, 'done'
  * })
  *
  * alwaysDone(function (cb) {
@@ -31,11 +37,18 @@ var utils = require('./utils')
  * }, function done (err) {
  *   console.log(err) // => Error: foo bar
  * })
+ *
  * ```
  *
  * @param  {Function} `<fn>` function to be called
+ * @param  {Object} `[opts]` optional options, such as `context` and `args`, passed to [try-catch-core][]
+ * @param  {Object} `[opts.context]` context to be passed to `fn`
+ * @param  {Array} `[opts.args]` custom argument(s) to be pass to `fn`, given value is arrayified
+ * @param  {Boolean} `[opts.passCallback]` pass `true` if you want `cb` to be passed to `fn` args
  * @param  {Function} `[done]` on completion
  * @return {Function} thunk until you pass `done` to that thunk
+ * @throws {TypError} if `fn` not a function.
+ * @throws {TypError} if no function is passed to `thunk`.
  * @api public
  */
 
