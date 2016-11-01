@@ -414,8 +414,8 @@ readFileThunk(function done (err, res) {
 - [is-node-stream](https://www.npmjs.com/package/is-node-stream): Strictly and correctly checks if value is a nodejs stream. | [homepage](https://github.com/tunnckocore/is-node-stream#readme "Strictly and correctly checks if value is a nodejs stream.")
 - [minibase](https://www.npmjs.com/package/minibase): MiniBase is minimalist approach to Base - @node-base, the awesome framework. Foundation… [more](https://github.com/node-minibase/minibase#readme) | [homepage](https://github.com/node-minibase/minibase#readme "MiniBase is minimalist approach to Base - @node-base, the awesome framework. Foundation for building complex APIs with small units called plugins. Works well with most of the already existing [base][] plugins.")
 - [on-stream-end](https://www.npmjs.com/package/on-stream-end): Handles completion and errors of any stream - readable/writable/duplex. | [homepage](https://github.com/tunnckocore/on-stream-end#readme "Handles completion and errors of any stream - readable/writable/duplex.")
-- [try-catch-callback](https://www.npmjs.com/package/try-catch-callback): try/catch block with a callback, used in [try-catch-core][]. Use it when you… [more](https://github.com/tunnckocore/try-catch-callback#readme) | [homepage](https://github.com/tunnckocore/try-catch-callback#readme "try/catch block with a callback, used in [try-catch-core][]. Use it when you don't care about asyncness so much and don't want guarantees. If you care use [try-catch-core][].")
-- [try-catch-core](https://www.npmjs.com/package/try-catch-core): Asynchronous and sync tryCatch in one place. The callback is securely wrapped… [more](https://github.com/tunnckocore/try-catch-core#readme) | [homepage](https://github.com/tunnckocore/try-catch-core#readme "Asynchronous and sync tryCatch in one place. The callback is securely wrapped with a [dezalgo][] and [once][].")
+- [try-catch-callback](https://www.npmjs.com/package/try-catch-callback): try/catch block with a callback, used in [try-catch-core][]. Use it when you… [more](https://github.com/hybridables/try-catch-callback#readme) | [homepage](https://github.com/hybridables/try-catch-callback#readme "try/catch block with a callback, used in [try-catch-core][]. Use it when you don't care about asyncness so much and don't want guarantees. If you care use [try-catch-core][].")
+- [try-catch-core](https://www.npmjs.com/package/try-catch-core): Low-level package to handle completion and errors of sync or asynchronous functions… [more](https://github.com/hybridables/try-catch-core#readme) | [homepage](https://github.com/hybridables/try-catch-core#readme "Low-level package to handle completion and errors of sync or asynchronous functions, using [once][] and [dezalgo][] libs. Useful for and used in higher-level libs such as [always-done][] to handle completion of anything.")
 
 ## Contributing
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/hybridables/always-done/issues/new).  
@@ -432,8 +432,8 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [on-stream-end]: https://github.com/tunnckocore/on-stream-end
 [once]: https://github.com/isaacs/once
 [stream-exhaust]: https://github.com/chrisdickinson/stream-exhaust.git
-[try-catch-callback]: https://github.com/tunnckocore/try-catch-callback
-[try-catch-core]: https://github.com/tunnckocore/try-catch-core
+[try-catch-callback]: https://github.com/hybridables/try-catch-callback
+[try-catch-core]: https://github.com/hybridables/try-catch-core
 
 [npmjs-url]: https://www.npmjs.com/package/always-done
 [npmjs-img]: https://img.shields.io/npm/v/always-done.svg?label=always-done
@@ -480,3 +480,4 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [new-message-url]: https://github.com/tunnckoCore/ama
 [new-message-img]: https://img.shields.io/badge/ask%20me-anything-green.svg
 
+[always-done]: https://github.com/hybridables/always-done
