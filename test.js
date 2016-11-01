@@ -20,3 +20,5 @@ require('./test/promises')
 require('./test/streams')
 
 require('./test/sync')
+
+require('./test/options')

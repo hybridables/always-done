@@ -39,9 +39,13 @@ var utils = require('./utils')
  * @api public
  */
 
-module.exports = function alwaysDone (fn, done) {
+module.exports = function alwaysDone (fn, opts, done) {
+  if (typeof opts === 'function') {
+    done = opts
+    opts = null
+  }
   if (typeof done === 'function') {
-    utils.tryCatchCore(fn, function cb (err, val) {
+    utils.tryCatchCore.call(this, fn, opts, function cb (err, val) {
       // handle errors
       if (err) {
         done(err)
@@ -64,9 +68,7 @@ module.exports = function alwaysDone (fn, done) {
 
       // handle observables
       if (val && typeof val.subscribe === 'function') {
-        utils.tryCatchCore(function (cb) {
-          utils.subscribe(val, cb)
-        }, done)
+        utils.subscribe(val, done)
         return
       }
 
@@ -83,7 +85,7 @@ module.exports = function alwaysDone (fn, done) {
   }
 
   return function thunk (cb) {
-    return alwaysDone(fn, cb)
+    return alwaysDone.call(this, fn, opts, cb)
   }
 }
 

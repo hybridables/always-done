@@ -28,7 +28,7 @@
     "lazy-cache": "^2.0.1",
     "on-stream-end": "^1.0.0",
     "stream-exhaust": "^1.0.1",
-    "try-catch-core": "^1.0.3"
+    "try-catch-core": "^2.0.1"
   },
   "devDependencies": {
     "assertit": "^0.1.0",
