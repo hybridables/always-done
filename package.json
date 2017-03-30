@@ -34,7 +34,7 @@
     "assertit": "^0.1.0",
     "bluebird": "^3.4.6",
     "commitizen": "^2.8.6",
-    "coveralls": "^2.11.14",
+    "coveralls": "^2.13.0",
     "cz-conventional-changelog": "^1.2.0",
     "mz": "^2.4.0",
     "nyc": "^10.0.0",
