@@ -35,7 +35,7 @@
     "bluebird": "^3.4.6",
     "commitizen": "^2.8.6",
     "coveralls": "^2.11.14",
-    "cz-conventional-changelog": "^1.2.0",
+    "cz-conventional-changelog": "^2.0.0",
     "mz": "^2.4.0",
     "nyc": "^11.0.2",
     "pre-commit": "^1.1.3",
